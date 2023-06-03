@@ -5,8 +5,8 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter_stripe/flutter_stripe.dart';
 import 'package:provider/provider.dart';
-import 'package:todo_assignment/auth_provider.dart';
-import 'package:todo_assignment/sign_in.dart';
+import 'package:todo_assignment/provider/auth_provider.dart';
+import 'package:todo_assignment/screens/auth/sign_in.dart';
 import 'package:http/http.dart' as http;
 
 class HomePage extends StatefulWidget {
@@ -174,17 +174,17 @@ class _HomePageState extends State<HomePage> {
     }
   }
 
-
   void savePaymentToFirebase(String paymentId, int amount) {
     final user = FirebaseAuth.instance.currentUser;
 
     if (user != null) {
       final collectionRef = FirebaseFirestore.instance.collection('payments');
-      final userPaymentsRef = collectionRef.doc(user.uid).collection('userPayments');
+      final userPaymentsRef =
+          collectionRef.doc(user.uid).collection('userPayments');
 
       userPaymentsRef.add({
         'paymentId': paymentId,
-        'amount': amount/100,
+        'amount': amount / 100,
         'date': DateTime.now().toIso8601String(),
       }).then((value) {
         print('Payment saved to Firebase: $paymentId, $amount');
@@ -193,10 +193,6 @@ class _HomePageState extends State<HomePage> {
       });
     }
   }
-
-
-
-
 
   //  Future<Map<String, dynamic>>
   createPaymentIntent(String amount, String currency) async {
