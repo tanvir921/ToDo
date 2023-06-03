@@ -22,21 +22,34 @@ class _HomePageState extends State<HomePage> {
       stream: FirebaseAuth.instance.authStateChanges(),
       builder: (context, snapshot) {
         if (snapshot.connectionState == ConnectionState.waiting) {
-          return const Center(child: CircularProgressIndicator());
+          return Center(
+              child: CircularProgressIndicator(
+            color: Theme.of(context).primaryColor,
+          ));
         } else if (snapshot.hasData && user != null) {
           return Scaffold(
+            floatingActionButton: FloatingActionButton(
+              backgroundColor: Theme.of(context).primaryColor,
+              onPressed: () {
+                showDialog(
+                  context: context,
+                  builder: (context) => AlertDialog(
+                    title: const Text('Add Task'),
+                    content: TodoForm(userId: user.uid),
+                  ),
+                );
+              },
+              child: const Icon(Icons.add),
+            ),
             drawer: const CustomDrawer(),
             appBar: AppBar(
-              title: const Text('Home Page'),
+              title: const Text('To Do'),
+              backgroundColor: Theme.of(context).primaryColor,
               actions: [
                 //Sign Out Button
                 IconButton(
-                  icon: const Icon(Icons.logout),
-                  onPressed: () {
-                    authProvider.signOut();
-                    Navigator.pushReplacement(context,
-                        MaterialPageRoute(builder: (builder) => SignInPage()));
-                  },
+                  icon: const Icon(Icons.account_circle),
+                  onPressed: () {},
                 ),
               ],
             ),
@@ -46,19 +59,6 @@ class _HomePageState extends State<HomePage> {
                 children: [
                   Expanded(
                     child: TodoList(userId: user.uid),
-                  ),
-                  const SizedBox(height: 16),
-                  FloatingActionButton(
-                    onPressed: () {
-                      showDialog(
-                        context: context,
-                        builder: (context) => AlertDialog(
-                          title: const Text('Add Task'),
-                          content: TodoForm(userId: user.uid),
-                        ),
-                      );
-                    },
-                    child: const Icon(Icons.add),
                   ),
                 ],
               ),

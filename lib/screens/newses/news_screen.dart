@@ -29,7 +29,7 @@ class _NewsesState extends State<Newses>
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        backgroundColor: Colors.green,
+        backgroundColor: Theme.of(context).primaryColor,
         elevation: 2,
         leading: IconButton(
             onPressed: () {
@@ -212,8 +212,10 @@ class _NewsesState extends State<Newses>
                 ),
               );
             } else {
-              return const Center(
-                child: CircularProgressIndicator(),
+              return Center(
+                child: CircularProgressIndicator(
+                  color: Theme.of(context).primaryColor,
+                ),
               );
             }
           },

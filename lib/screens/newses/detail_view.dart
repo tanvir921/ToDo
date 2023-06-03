@@ -42,7 +42,8 @@ class _DetailViewState extends State<DetailView> {
     Duration diff = dt2.difference(dt1);
     return Scaffold(
       body: ScaffoldLayoutBuilder(
-        backgroundColorAppBar: ColorBuilder(Colors.transparent, Colors.green),
+        backgroundColorAppBar:
+            ColorBuilder(Colors.transparent, Theme.of(context).primaryColor),
         textColorAppBar: const ColorBuilder(Colors.white),
         appBarBuilder: _appBar,
         appBarHeight: 75,
@@ -151,12 +152,11 @@ class _DetailViewState extends State<DetailView> {
                               height: 40,
                               //width: 135,
                               padding: const EdgeInsets.fromLTRB(5, 0, 15, 0),
-                              decoration: const BoxDecoration(
-                                borderRadius: BorderRadius.all(
-                                  Radius.circular(50),
-                                ),
-                                color: Colors.black,
-                              ),
+                              decoration: BoxDecoration(
+                                  borderRadius: BorderRadius.all(
+                                    Radius.circular(50),
+                                  ),
+                                  color: Theme.of(context).primaryColor),
                               child: Row(
                                 children: [
                                   Container(
@@ -199,7 +199,7 @@ class _DetailViewState extends State<DetailView> {
                                 borderRadius: const BorderRadius.all(
                                   Radius.circular(50),
                                 ),
-                                color: Colors.green.shade50,
+                                color: Colors.black.withOpacity(0.1),
                               ),
                               child: Row(
                                 children: [
@@ -229,7 +229,7 @@ class _DetailViewState extends State<DetailView> {
                                 borderRadius: const BorderRadius.all(
                                   Radius.circular(50),
                                 ),
-                                color: Colors.green.shade50,
+                                color: Colors.black.withOpacity(0.1),
                               ),
                               child: Row(
                                 children: [
@@ -332,11 +332,11 @@ class _DetailViewState extends State<DetailView> {
                                 width: 120,
                                 margin: const EdgeInsets.only(top: 10),
                                 //padding: const EdgeInsets.fromLTRB(15, 0, 15, 0),
-                                decoration: const BoxDecoration(
+                                decoration: BoxDecoration(
                                   borderRadius: BorderRadius.all(
                                     Radius.circular(50),
                                   ),
-                                  color: Colors.black,
+                                  color: Theme.of(context).primaryColor,
                                 ),
                                 child: Center(
                                   child: Row(
@@ -386,15 +386,6 @@ class _DetailViewState extends State<DetailView> {
       leading: IconButton(
           onPressed: Navigator.of(context).pop,
           icon: const Icon(Icons.arrow_back_ios_new_rounded)),
-      actions: [
-        IconButton(
-          onPressed: () {},
-          icon: Icon(
-            Icons.favorite,
-            color: colorAnimated.color,
-          ),
-        ),
-      ],
     );
   }
 }

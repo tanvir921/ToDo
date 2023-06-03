@@ -29,7 +29,9 @@ class MyApp extends StatelessWidget {
       debugShowCheckedModeBanner: false,
       //theming
       theme: ThemeData(
-        primarySwatch: Colors.blue,
+        primaryColor: Color.fromARGB(255, 19, 0, 46),
+
+        //primarySwatch: Colors.blue,
       ),
       home: AuthenticationWrapper(),
     );
