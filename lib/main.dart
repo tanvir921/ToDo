@@ -4,7 +4,7 @@ import 'package:flutter_stripe/flutter_stripe.dart';
 import 'package:provider/provider.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:todo_assignment/screens/auth/sign_in.dart';
-import 'package:todo_assignment/screens/home.dart';
+import 'package:todo_assignment/screens/home/home.dart';
 import 'provider/auth_provider.dart';
 
 void main() async {

@@ -1,8 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:todo_assignment/provider/auth_provider.dart';
-import 'package:todo_assignment/screens/home.dart';
+
 import 'package:todo_assignment/screens/auth/sign_up.dart';
+import 'package:todo_assignment/screens/home/home.dart';
 
 class SignInPage extends StatefulWidget {
   @override
