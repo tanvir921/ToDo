@@ -1,4 +1,4 @@
-package com.example.todo_assignment
+package com.devxhub.todo
 
 import io.flutter.embedding.android.FlutterFragmentActivity
 

@@ -52,7 +52,9 @@ class _HomePageState extends State<HomePage> {
                     ListTile(
                       title: Text('Donate 5 Dollers'),
                       leading: Icon(Icons.money),
-                      onTap: () {},
+                      onTap: () async {
+                        await makePayment();
+                      },
                     ),
                   ]),
             ),
@@ -106,7 +108,7 @@ class _HomePageState extends State<HomePage> {
 
   Future<void> makePayment() async {
     try {
-      paymentIntent = await createPaymentIntent('10', 'USD');
+      paymentIntent = await createPaymentIntent('5', 'USD');
       //Payment Sheet
       await Stripe.instance
           .initPaymentSheet(
@@ -115,7 +117,7 @@ class _HomePageState extends State<HomePage> {
                   // applePay: const PaymentSheetApplePay(merchantCountryCode: '+92',),
                   // googlePay: const PaymentSheetGooglePay(testEnv: true, currencyCode: "US", merchantCountryCode: "+92"),
                   style: ThemeMode.dark,
-                  merchantDisplayName: 'Adnan'))
+                  merchantDisplayName: 'Tanvir Ahmed'))
           .then((value) {});
 
       ///now finally display payment sheeet
@@ -128,25 +130,32 @@ class _HomePageState extends State<HomePage> {
   displayPaymentSheet() async {
     try {
       await Stripe.instance.presentPaymentSheet().then((value) {
+        // Payment successful
+        // Save payment ID, amount, and date to Firebase database
+        savePaymentToFirebase(
+          paymentIntent!['id'],
+          paymentIntent!['amount'],
+        );
+
         showDialog(
-            context: context,
-            builder: (_) => AlertDialog(
-                  content: Column(
-                    mainAxisSize: MainAxisSize.min,
-                    children: [
-                      Row(
-                        children: const [
-                          Icon(
-                            Icons.check_circle,
-                            color: Colors.green,
-                          ),
-                          Text("Payment Successfull"),
-                        ],
-                      ),
-                    ],
-                  ),
-                ));
-        // ScaffoldMessenger.of(context).showSnackBar(const SnackBar(content: Text("paid successfully")));
+          context: context,
+          builder: (_) => AlertDialog(
+            content: Column(
+              mainAxisSize: MainAxisSize.min,
+              children: [
+                Row(
+                  children: const [
+                    Icon(
+                      Icons.check_circle,
+                      color: Colors.green,
+                    ),
+                    Text("Payment Successful"),
+                  ],
+                ),
+              ],
+            ),
+          ),
+        );
 
         paymentIntent = null;
       }).onError((error, stackTrace) {
@@ -155,14 +164,39 @@ class _HomePageState extends State<HomePage> {
     } on StripeException catch (e) {
       print('Error is:---> $e');
       showDialog(
-          context: context,
-          builder: (_) => const AlertDialog(
-                content: Text("Cancelled "),
-              ));
+        context: context,
+        builder: (_) => const AlertDialog(
+          content: Text("Cancelled"),
+        ),
+      );
     } catch (e) {
       print('$e');
     }
   }
+
+
+  void savePaymentToFirebase(String paymentId, int amount) {
+    final user = FirebaseAuth.instance.currentUser;
+
+    if (user != null) {
+      final collectionRef = FirebaseFirestore.instance.collection('payments');
+      final userPaymentsRef = collectionRef.doc(user.uid).collection('userPayments');
+
+      userPaymentsRef.add({
+        'paymentId': paymentId,
+        'amount': amount/100,
+        'date': DateTime.now().toIso8601String(),
+      }).then((value) {
+        print('Payment saved to Firebase: $paymentId, $amount');
+      }).catchError((error) {
+        print('Failed to save payment to Firebase: $error');
+      });
+    }
+  }
+
+
+
+
 
   //  Future<Map<String, dynamic>>
   createPaymentIntent(String amount, String currency) async {
