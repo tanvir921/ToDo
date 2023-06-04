@@ -20,6 +20,7 @@ class _SignInPageState extends State<SignInPage> {
   @override
   Widget build(BuildContext context) {
     final authProvider = Provider.of<AuthProvider>(context);
+    Color secondaryColor = Color.fromARGB(255, 255, 212, 1);
 
     return Scaffold(
       body: Padding(
@@ -182,7 +183,7 @@ class _SignInPageState extends State<SignInPage> {
                     child: Text(
                       'LOG IN',
                       style: TextStyle(
-                        color: Colors.white,
+                        color: secondaryColor,
                         fontSize: 17,
                       ),
                     ),
