@@ -8,6 +8,7 @@ import 'package:todo_assignment/screens/drawer/drawer.dart';
 import 'package:todo_assignment/screens/home/home.dart';
 import 'package:todo_assignment/screens/home/todo/todo_form.dart';
 import 'provider/auth_provider.dart';
+import 'package:google_fonts/google_fonts.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -31,10 +32,10 @@ class MyApp extends StatelessWidget {
       debugShowCheckedModeBanner: false,
       //theming
       theme: ThemeData(
-        primaryColor: Color.fromARGB(255, 19, 0, 46),
+          primaryColor: Color.fromARGB(255, 19, 0, 46),
 
-        //primarySwatch: Colors.blue,
-      ),
+          //primarySwatch: Colors.blue,
+          textTheme: GoogleFonts.abelTextTheme()),
       home: AuthenticationWrapper(),
     );
   }
@@ -65,6 +66,7 @@ class AuthenticationWrapper extends StatelessWidget {
               ),
               drawer: const CustomDrawer(),
               appBar: AppBar(
+                centerTitle: true,
                 title: const Text('To Do'),
                 backgroundColor: Theme.of(context).primaryColor,
                 actions: [

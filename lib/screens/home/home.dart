@@ -26,6 +26,7 @@ class _HomePageState extends State<HomePage> {
         if (snapshot.connectionState == ConnectionState.waiting) {
           return Scaffold(
             appBar: AppBar(
+              centerTitle: true,
               title: const Text('To Do'),
               backgroundColor: Theme.of(context).primaryColor,
             ),
