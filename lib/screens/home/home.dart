@@ -48,7 +48,7 @@ class _HomePageState extends State<HomePage> {
               actions: [
                 //Sign Out Button
                 IconButton(
-                  icon: const Icon(Icons.account_circle),
+                  icon: const Icon(Icons.favorite),
                   onPressed: () {},
                 ),
               ],
