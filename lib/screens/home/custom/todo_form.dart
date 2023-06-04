@@ -1,6 +1,7 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:todo_assignment/responsive/mediaquery.dart';
 
 class TodoForm extends StatefulWidget {
   final String userId;
@@ -32,54 +33,72 @@ class _TodoFormState extends State<TodoForm> {
 
   @override
   Widget build(BuildContext context) {
-    return Padding(
-      padding: const EdgeInsets.all(16.0),
-      child: Column(
-        children: [
-          TextField(
-            controller: _titleController,
-            decoration: InputDecoration(labelText: 'Title'),
-          ),
-          SizedBox(height: 16.0),
-          TextField(
-            controller: _descriptionController,
-            decoration: InputDecoration(labelText: 'Description'),
-          ),
-          SizedBox(height: 16.0),
-          ElevatedButton(
-            onPressed: () {
-              final String title = _titleController.text.trim();
-              final String description = _descriptionController.text.trim();
+    return SingleChildScrollView(
+      child: Padding(
+        padding: const EdgeInsets.all(16.0),
+        child: Column(
+          children: [
+            TextField(
+              controller: _titleController,
+              decoration: InputDecoration(labelText: 'Title'),
+            ),
+            SizedBox(height: 16.0),
+            TextField(
+              controller: _descriptionController,
+              decoration: InputDecoration(labelText: 'Description'),
+            ),
+            SizedBox(height: 20.0),
+            InkWell(
+              onTap: () {
+                final String title = _titleController.text.trim();
+                final String description = _descriptionController.text.trim();
 
-              if (title.isNotEmpty && description.isNotEmpty) {
-                if (widget.taskId != null) {
-                  FirebaseFirestore.instance
-                      .collection('todos')
-                      .doc(widget.userId)
-                      .collection('tasks')
-                      .doc(widget.taskId)
-                      .update({
-                    'title': title,
-                    'description': description,
-                  });
-                } else {
-                  FirebaseFirestore.instance
-                      .collection('todos')
-                      .doc(widget.userId)
-                      .collection('tasks')
-                      .add({
-                    'title': title,
-                    'description': description,
-                    'isDone': false,
-                  });
+                if (title.isNotEmpty && description.isNotEmpty) {
+                  if (widget.taskId != null) {
+                    FirebaseFirestore.instance
+                        .collection('todos')
+                        .doc(widget.userId)
+                        .collection('tasks')
+                        .doc(widget.taskId)
+                        .update({
+                      'title': title,
+                      'description': description,
+                    });
+                  } else {
+                    FirebaseFirestore.instance
+                        .collection('todos')
+                        .doc(widget.userId)
+                        .collection('tasks')
+                        .add({
+                      'title': title,
+                      'description': description,
+                      'isDone': false,
+                    });
+                  }
+
+                  Navigator.pop(context);
                 }
-
-                Navigator.pop(context);
-              }
-            },
-            child: Text('Save'),
-          ),
-        ],
+              },
+              child: Container(
+                height: context.height * 0.04,
+                width: context.width * 0.2,
+                decoration: BoxDecoration(
+                  color: Theme.of(context).primaryColor,
+                  borderRadius: BorderRadius.circular(10),
+                ),
+                child: Center(
+                  child: Text(
+                    'SAVE',
+                    style: TextStyle(
+                      color: Colors.white,
+                      fontSize: 17,
+                    ),
+                  ),
+                ),
+              ),
+            ),
+          ],
+        ),
       ),
     );
   }

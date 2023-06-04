@@ -33,44 +33,65 @@ class PaymentService {
 
   displayPaymentSheet(BuildContext context) async {
     try {
-      await Stripe.instance.presentPaymentSheet().then((value) {
-        // Payment successful
-        // Save payment ID, amount, and date to Firebase database
-        savePaymentToFirebase(
-          paymentIntent!['id'],
-          paymentIntent!['amount'],
-        );
+      await Stripe.instance.presentPaymentSheet();
 
-        showDialog(
-          context: context,
-          builder: (_) => AlertDialog(
-            content: Column(
-              mainAxisSize: MainAxisSize.min,
-              children: [
-                Row(
-                  children: const [
-                    Icon(
-                      Icons.check_circle,
-                      color: Colors.green,
-                    ),
-                    Text("Payment Successful"),
-                  ],
-                ),
-              ],
-            ),
+      // Payment successful
+      // Save payment ID, amount, and date to Firebase database
+      savePaymentToFirebase(
+        paymentIntent!['id'],
+        paymentIntent!['amount'],
+      );
+
+      showDialog(
+        context: context,
+        builder: (_) => AlertDialog(
+          content: Column(
+            mainAxisSize: MainAxisSize.min,
+            children: [
+              Row(
+                mainAxisAlignment: MainAxisAlignment.center,
+                crossAxisAlignment: CrossAxisAlignment.center,
+                children: const [
+                  Icon(
+                    Icons.check_circle,
+                    color: Colors.green,
+                  ),
+                  SizedBox(
+                    width: 5,
+                  ),
+                  Text("Payment Successful"),
+                ],
+              ),
+            ],
           ),
-        );
+        ),
+      );
 
-        paymentIntent = null;
-      }).onError((error, stackTrace) {
-        print('Error is:--->$error $stackTrace');
-      });
+      paymentIntent = null;
     } on StripeException catch (e) {
       print('Error is:---> $e');
       showDialog(
         context: context,
-        builder: (_) => const AlertDialog(
-          content: Text("Cancelled"),
+        builder: (_) => AlertDialog(
+          content: Column(
+            mainAxisSize: MainAxisSize.min,
+            children: [
+              Row(
+                mainAxisAlignment: MainAxisAlignment.center,
+                crossAxisAlignment: CrossAxisAlignment.center,
+                children: const [
+                  Icon(
+                    Icons.cancel_rounded,
+                    color: Colors.red,
+                  ),
+                  SizedBox(
+                    width: 5,
+                  ),
+                  Text("Canceled"),
+                ],
+              ),
+            ],
+          ),
         ),
       );
     } catch (e) {
