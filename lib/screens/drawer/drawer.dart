@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:todo_assignment/provider/auth_provider.dart';
 import 'package:todo_assignment/screens/auth/sign_in.dart';
-import 'package:todo_assignment/screens/newses/news_screen.dart';
+import 'package:todo_assignment/screens/news/news_screen.dart';
 import 'package:todo_assignment/services/payment_service.dart';
 
 class CustomDrawer extends StatefulWidget {
