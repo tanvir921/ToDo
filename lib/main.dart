@@ -5,7 +5,9 @@ import 'package:provider/provider.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:todo_assignment/screens/auth/sign_in.dart';
 import 'package:todo_assignment/screens/home/home.dart';
+import 'package:todo_assignment/screens/splash/splash_screen.dart';
 import 'provider/auth_provider.dart';
+import 'package:google_fonts/google_fonts.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -30,38 +32,10 @@ class MyApp extends StatelessWidget {
       //theming
       theme: ThemeData(
         primaryColor: Color.fromARGB(255, 19, 0, 46),
-
+        textTheme: GoogleFonts.robotoSlabTextTheme(),
         //primarySwatch: Colors.blue,
       ),
-      home: AuthenticationWrapper(),
-    );
-  }
-}
-
-class AuthenticationWrapper extends StatelessWidget {
-  const AuthenticationWrapper({super.key});
-
-  @override
-  Widget build(BuildContext context) {
-    final authProvider = Provider.of<AuthProvider>(context);
-    return StreamBuilder<User?>(
-      stream: authProvider.firebaseAuth.authStateChanges(),
-      builder: (context, snapshot) {
-        if (snapshot.connectionState == ConnectionState.waiting) {
-          return Scaffold(
-            body: Center(child: CircularProgressIndicator()),
-          );
-        } else {
-          if (snapshot.hasData && snapshot.data != null) {
-            return ChangeNotifierProvider.value(
-              value: authProvider,
-              child: HomePage(),
-            );
-          } else {
-            return SignInPage();
-          }
-        }
-      },
+      home: SplashPage(),
     );
   }
 }
