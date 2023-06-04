@@ -4,7 +4,9 @@ import 'package:flutter_stripe/flutter_stripe.dart';
 import 'package:provider/provider.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:todo_assignment/screens/auth/sign_in.dart';
+import 'package:todo_assignment/screens/drawer/drawer.dart';
 import 'package:todo_assignment/screens/home/home.dart';
+import 'package:todo_assignment/screens/home/todo/todo_form.dart';
 import 'provider/auth_provider.dart';
 
 void main() async {
@@ -46,7 +48,37 @@ class AuthenticationWrapper extends StatelessWidget {
       stream: authProvider.firebaseAuth.authStateChanges(),
       builder: (context, snapshot) {
         if (snapshot.connectionState == ConnectionState.waiting) {
-          return Center(child: CircularProgressIndicator());
+          return Scaffold(
+              floatingActionButton: FloatingActionButton(
+                backgroundColor: Theme.of(context).primaryColor,
+                onPressed: () {
+                  final user = authProvider.user;
+                  showDialog(
+                    context: context,
+                    builder: (context) => AlertDialog(
+                      title: const Text('Add Task'),
+                      content: TodoForm(userId: user!.uid),
+                    ),
+                  );
+                },
+                child: const Icon(Icons.add),
+              ),
+              drawer: const CustomDrawer(),
+              appBar: AppBar(
+                title: const Text('To Do'),
+                backgroundColor: Theme.of(context).primaryColor,
+                actions: [
+                  //Sign Out Button
+                  IconButton(
+                    icon: const Icon(Icons.favorite),
+                    onPressed: () {},
+                  ),
+                ],
+              ),
+              body: Center(
+                  child: CircularProgressIndicator(
+                color: Theme.of(context).primaryColor,
+              )));
         } else {
           if (snapshot.hasData && snapshot.data != null) {
             return ChangeNotifierProvider.value(
