@@ -26,7 +26,14 @@ class _HomePageState extends State<HomePage> {
         if (snapshot.connectionState == ConnectionState.waiting) {
           return Scaffold(
             appBar: AppBar(
-              title: const Text('To Do'),
+              title: const Text(
+                'To Do',
+                style: TextStyle(
+                  fontSize: 30,
+                ),
+              ),
+              centerTitle: true,
+              titleSpacing: 0,
               backgroundColor: Theme.of(context).primaryColor,
             ),
             body: Center(
@@ -52,7 +59,14 @@ class _HomePageState extends State<HomePage> {
             ),
             drawer: const CustomDrawer(),
             appBar: AppBar(
-              title: const Text('To Do'),
+              title: const Text(
+                'To Do',
+                style: TextStyle(
+                  fontSize: 30,
+                ),
+              ),
+              centerTitle: true,
+              titleSpacing: 0,
               backgroundColor: Theme.of(context).primaryColor,
               actions: [
                 //Sign Out Button
