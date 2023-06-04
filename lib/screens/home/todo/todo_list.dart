@@ -234,7 +234,7 @@ class TodoList extends StatelessWidget {
         } else if (snapshot.hasError) {
           return Text('Error loading tasks');
         } else {
-          return CircularProgressIndicator();
+          return Container();
         }
       },
     );

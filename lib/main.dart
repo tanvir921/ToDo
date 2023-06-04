@@ -39,6 +39,8 @@ class MyApp extends StatelessWidget {
 }
 
 class AuthenticationWrapper extends StatelessWidget {
+  const AuthenticationWrapper({super.key});
+
   @override
   Widget build(BuildContext context) {
     final authProvider = Provider.of<AuthProvider>(context);
@@ -46,7 +48,9 @@ class AuthenticationWrapper extends StatelessWidget {
       stream: authProvider.firebaseAuth.authStateChanges(),
       builder: (context, snapshot) {
         if (snapshot.connectionState == ConnectionState.waiting) {
-          return Scaffold(body: Center(child: CircularProgressIndicator()));
+          return Scaffold(
+            body: Center(child: CircularProgressIndicator()),
+          );
         } else {
           if (snapshot.hasData && snapshot.data != null) {
             return ChangeNotifierProvider.value(

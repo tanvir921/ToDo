@@ -7,46 +7,78 @@ import 'package:todo_assignment/screens/auth/sign_in.dart';
 import 'package:todo_assignment/screens/home/todo/todo_form.dart';
 import 'package:todo_assignment/screens/home/todo/todo_list.dart';
 
-class HomePage extends StatelessWidget {
+class HomePage extends StatefulWidget {
+  const HomePage({super.key});
+
+  @override
+  State<HomePage> createState() => _HomePageState();
+}
+
+class _HomePageState extends State<HomePage> {
   @override
   Widget build(BuildContext context) {
     final authProvider = Provider.of<AuthProvider>(context);
     final user = authProvider.user;
 
-    return Scaffold(
-      floatingActionButton: FloatingActionButton(
-        backgroundColor: Theme.of(context).primaryColor,
-        onPressed: () {
-          showDialog(
-            context: context,
-            builder: (context) => AlertDialog(
-              title: const Text('Add Task'),
-              content: TodoForm(userId: user!.uid),
+    return StreamBuilder<User?>(
+      stream: FirebaseAuth.instance.authStateChanges(),
+      builder: (context, snapshot) {
+        if (snapshot.connectionState == ConnectionState.waiting) {
+          return Scaffold(
+            appBar: AppBar(
+              title: const Text('To Do'),
+              backgroundColor: Theme.of(context).primaryColor,
+            ),
+            body: Center(
+              child: CircularProgressIndicator(
+                color: Theme.of(context).primaryColor,
+              ),
             ),
           );
-        },
-        child: const Icon(Icons.add),
-      ),
-      drawer: const CustomDrawer(),
-      appBar: AppBar(
-        title: const Text('To Do'),
-        backgroundColor: Theme.of(context).primaryColor,
-        actions: [
-          // Sign Out Button
-          IconButton(
-            icon: const Icon(Icons.favorite),
-            onPressed: () {},
-          ),
-        ],
-      ),
-      body: Column(
-        mainAxisAlignment: MainAxisAlignment.center,
-        children: [
-          Expanded(
-            child: TodoList(userId: user!.uid),
-          ),
-        ],
-      ),
+        } else if (snapshot.hasData && user != null) {
+          return Scaffold(
+            floatingActionButton: FloatingActionButton(
+              backgroundColor: Theme.of(context).primaryColor,
+              onPressed: () {
+                showDialog(
+                  context: context,
+                  builder: (context) => AlertDialog(
+                    title: const Text('Add Task'),
+                    content: TodoForm(userId: user.uid),
+                  ),
+                );
+              },
+              child: const Icon(Icons.add),
+            ),
+            drawer: const CustomDrawer(),
+            appBar: AppBar(
+              title: const Text('To Do'),
+              backgroundColor: Theme.of(context).primaryColor,
+              actions: [
+                //Sign Out Button
+                IconButton(
+                  icon: const Icon(Icons.favorite),
+                  onPressed: () {},
+                ),
+              ],
+            ),
+            body: Column(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                Expanded(
+                  child: TodoList(userId: user.uid),
+                ),
+              ],
+            ),
+          );
+        } else {
+          WidgetsBinding.instance!.addPostFrameCallback((_) {
+            Navigator.pushReplacement(
+                context, MaterialPageRoute(builder: (builder) => SignInPage()));
+          });
+          return const Scaffold();
+        }
+      },
     );
   }
 }
