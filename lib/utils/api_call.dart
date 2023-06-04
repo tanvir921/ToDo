@@ -9,11 +9,14 @@ class ApiCall {
     response = await http.get(
       Uri.parse(AppConstants.BASE_URL),
     );
-    //List<dynamic> data = jsonDecode( utf8.decode(response.body.toString() as List<int>));
+
     var data = json.decode(utf8.decode(response.bodyBytes));
+
     if (response.statusCode == 200) {
+      // Return parsed LatestNews object if response is successful
       return LatestNews.fromJson(data);
     } else {
+      // Return parsed LatestNews object even if response is unsuccessful
       return LatestNews.fromJson(data);
     }
   }

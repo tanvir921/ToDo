@@ -5,33 +5,31 @@ import 'package:flutter_stripe/flutter_stripe.dart';
 import 'package:http/http.dart' as http;
 import 'dart:convert';
 
+import 'package:todo_assignment/utils/app_constraints.dart';
+
 class PaymentService {
   Map<String, dynamic>? paymentIntent;
 
   Future<void> makePayment(BuildContext context) async {
     try {
       paymentIntent = await createPaymentIntent('5', 'USD');
-      //Payment Sheet
-      await Stripe.instance
-          .initPaymentSheet(
-            paymentSheetParameters: SetupPaymentSheetParameters(
-              paymentIntentClientSecret: paymentIntent!['client_secret'],
-              // applePay: const PaymentSheetApplePay(merchantCountryCode: '+92',),
-              // googlePay: const PaymentSheetGooglePay(testEnv: true, currencyCode: "US", merchantCountryCode: "+92"),
-              style: ThemeMode.dark,
-              merchantDisplayName: 'Tanvir Ahmed',
-            ),
-          )
-          .then((value) {});
+      // Payment Sheet initialization
+      await Stripe.instance.initPaymentSheet(
+        paymentSheetParameters: SetupPaymentSheetParameters(
+          paymentIntentClientSecret: paymentIntent!['client_secret'],
+          style: ThemeMode.dark,
+          merchantDisplayName: 'Tanvir Ahmed',
+        ),
+      );
 
-      ///now finally display payment sheet
-      displayPaymentSheet(context);
+      // Display Payment Sheet
+      await displayPaymentSheet(context);
     } catch (e, s) {
       print('exception:$e$s');
     }
   }
 
-  displayPaymentSheet(BuildContext context) async {
+  Future<void> displayPaymentSheet(BuildContext context) async {
     try {
       await Stripe.instance.presentPaymentSheet();
 
@@ -51,7 +49,7 @@ class PaymentService {
               Row(
                 mainAxisAlignment: MainAxisAlignment.center,
                 crossAxisAlignment: CrossAxisAlignment.center,
-                children: const [
+                children: [
                   Icon(
                     Icons.check_circle,
                     color: Colors.green,
@@ -79,7 +77,7 @@ class PaymentService {
               Row(
                 mainAxisAlignment: MainAxisAlignment.center,
                 crossAxisAlignment: CrossAxisAlignment.center,
-                children: const [
+                children: [
                   Icon(
                     Icons.cancel_rounded,
                     color: Colors.red,
@@ -87,7 +85,7 @@ class PaymentService {
                   SizedBox(
                     width: 5,
                   ),
-                  Text("Canceled"),
+                  Text("Cancelled"),
                 ],
               ),
             ],
@@ -131,17 +129,15 @@ class PaymentService {
       var response = await http.post(
         Uri.parse('https://api.stripe.com/v1/payment_intents'),
         headers: {
-          'Authorization':
-              'Bearer sk_test_51LFqu7DbW0JoxU1NcWXAO10CAUKcrHgODSqwxeUleGbV5TC9RDQePyMgSIzaFKbxyrfIYOKWFvhk3xeakhvZnmsH00qG6iGVU3',
+          'Authorization': 'Bearer ${AppConstants.STRIPE_SECRET_KEY}',
           'Content-Type': 'application/x-www-form-urlencoded'
         },
         body: body,
       );
-      // ignore: avoid_print
+
       print('Payment Intent Body->>> ${response.body.toString()}');
       return jsonDecode(response.body);
     } catch (err) {
-      // ignore: avoid_print
       print('err charging user: ${err.toString()}');
       throw err;
     }

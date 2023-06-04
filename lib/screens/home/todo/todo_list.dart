@@ -52,9 +52,8 @@ class TodoList extends StatelessWidget {
                   ),
                 ),
                 child: Container(
-                  margin: EdgeInsets.only(top: 10, left: 10, right: 10),
+                  margin: EdgeInsets.symmetric(vertical: 10, horizontal: 10),
                   height: context.height * 0.16,
-                  //width: context.width * 0.9,
                   decoration: BoxDecoration(
                     color: tileColor,
                     borderRadius: BorderRadius.circular(10),
@@ -86,10 +85,7 @@ class TodoList extends StatelessWidget {
                         ),
                       ),
                       Container(
-                        margin: EdgeInsets.only(
-                          top: 5,
-                          bottom: 5,
-                        ),
+                        margin: EdgeInsets.symmetric(vertical: 5),
                         height: context.height * 0.12,
                         width: context.width * 0.6,
                         child: Column(
@@ -98,6 +94,7 @@ class TodoList extends StatelessWidget {
                             Align(
                               alignment: Alignment.centerLeft,
                               child: Text(
+                                // Truncate long titles with ellipsis
                                 title.length > 23
                                     ? '${title.substring(0, 23)}...'
                                     : title,
@@ -112,12 +109,11 @@ class TodoList extends StatelessWidget {
                                 ),
                               ),
                             ),
-                            SizedBox(
-                              height: 5,
-                            ),
+                            SizedBox(height: 5),
                             Align(
                               alignment: Alignment.centerLeft,
                               child: Text(
+                                // Truncate long descriptions with ellipsis
                                 description.length > 100
                                     ? '${description.substring(0, 100)}...'
                                     : description,
@@ -160,75 +156,6 @@ class TodoList extends StatelessWidget {
                   ),
                 ),
               );
-
-              // Card(
-              //   shape: RoundedRectangleBorder(
-              //     borderRadius: BorderRadius.circular(10),
-              //   ),
-              //   color: tileColor,
-              //   child: ListTile(
-              //     leading: Checkbox(
-              //       value: isDone,
-              //       onChanged: (value) {
-              //         FirebaseFirestore.instance
-              //             .collection('todos')
-              //             .doc(userId)
-              //             .collection('tasks')
-              //             .doc(task.id)
-              //             .update({'isDone': value});
-              //       },
-              //     ),
-              //     title: Text(
-              //       title,
-              //       style: TextStyle(
-              //         decoration: isDone ? TextDecoration.lineThrough : null,
-              //         color: Colors.white,
-              //       ),
-              //     ),
-              //     subtitle: Text(
-              //       description,
-              //       style: TextStyle(
-              //         decoration: isDone ? TextDecoration.lineThrough : null,
-              //         color: Colors.white,
-              //       ),
-              //     ),
-              //     trailing: Container(
-              //       height: 100,
-              //       width: 100,
-              //       decoration: BoxDecoration(
-              //         color: Theme.of(context).primaryColor,
-              //       ),
-              //       child: IconButton(
-              //         icon: Icon(
-              //           Icons.delete,
-              //           color: Colors.red,
-              //         ),
-              //         onPressed: () {
-              //           FirebaseFirestore.instance
-              //               .collection('todos')
-              //               .doc(userId)
-              //               .collection('tasks')
-              //               .doc(task.id)
-              //               .delete();
-              //         },
-              //       ),
-              //     ),
-              //     onTap: () {
-              //       showDialog(
-              //         context: context,
-              //         builder: (context) => AlertDialog(
-              //           title: Text('Edit Task'),
-              //           content: TodoForm(
-              //             userId: userId,
-              //             initialTitle: title,
-              //             initialDescription: description,
-              //             taskId: task.id,
-              //           ),
-              //         ),
-              //       );
-              //     },
-              //   ),
-              // );
             },
           );
         } else if (snapshot.hasError) {

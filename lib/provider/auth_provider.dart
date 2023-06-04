@@ -9,12 +9,14 @@ class AuthProvider extends ChangeNotifier {
   FirebaseAuth get firebaseAuth => _firebaseAuth;
 
   AuthProvider() {
+    // Listen to auth state changes and update the user accordingly
     _firebaseAuth.authStateChanges().listen((User? currentUser) {
       _user = currentUser;
       notifyListeners();
     });
   }
 
+  /// Sign in with email and password
   Future<void> signInWithEmailAndPassword(String email, String password) async {
     try {
       await _firebaseAuth.signInWithEmailAndPassword(
@@ -27,6 +29,7 @@ class AuthProvider extends ChangeNotifier {
     }
   }
 
+  /// Sign up with email and password
   Future<void> signUpWithEmailAndPassword(String email, String password) async {
     try {
       await _firebaseAuth.createUserWithEmailAndPassword(
@@ -39,6 +42,7 @@ class AuthProvider extends ChangeNotifier {
     }
   }
 
+  /// Sign out the current user
   Future<void> signOut() async {
     try {
       await _firebaseAuth.signOut();

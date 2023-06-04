@@ -8,7 +8,7 @@ import 'package:todo_assignment/screens/home/todo/todo_form.dart';
 import 'package:todo_assignment/screens/home/todo/todo_list.dart';
 
 class HomePage extends StatefulWidget {
-  const HomePage({super.key});
+  const HomePage({Key? key}) : super(key: key);
 
   @override
   State<HomePage> createState() => _HomePageState();
@@ -24,6 +24,7 @@ class _HomePageState extends State<HomePage> {
       stream: FirebaseAuth.instance.authStateChanges(),
       builder: (context, snapshot) {
         if (snapshot.connectionState == ConnectionState.waiting) {
+          // Show a loading indicator while waiting for the connection state
           return Scaffold(
             appBar: AppBar(
               title: const Text(
@@ -43,10 +44,12 @@ class _HomePageState extends State<HomePage> {
             ),
           );
         } else if (snapshot.hasData && user != null) {
+          // If the user is authenticated and data is available, display the home screen
           return Scaffold(
             floatingActionButton: FloatingActionButton(
               backgroundColor: Theme.of(context).primaryColor,
               onPressed: () {
+                // Show the add task dialog
                 showDialog(
                   context: context,
                   builder: (context) => AlertDialog(
@@ -57,7 +60,7 @@ class _HomePageState extends State<HomePage> {
               },
               child: const Icon(Icons.add),
             ),
-            drawer: const CustomDrawer(),
+            drawer: CustomDrawer(),
             appBar: AppBar(
               title: const Text(
                 'To Do',
@@ -69,7 +72,7 @@ class _HomePageState extends State<HomePage> {
               titleSpacing: 0,
               backgroundColor: Theme.of(context).primaryColor,
               actions: [
-                //Sign Out Button
+                // Add sign out button or any other actions
                 IconButton(
                   icon: const Icon(Icons.favorite),
                   onPressed: () {},
@@ -86,6 +89,7 @@ class _HomePageState extends State<HomePage> {
             ),
           );
         } else {
+          // If the user is not authenticated, navigate to the sign-in page
           WidgetsBinding.instance!.addPostFrameCallback((_) {
             Navigator.pushReplacement(
                 context, MaterialPageRoute(builder: (builder) => SignInPage()));

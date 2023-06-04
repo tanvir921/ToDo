@@ -38,16 +38,19 @@ class _TodoFormState extends State<TodoForm> {
         padding: const EdgeInsets.all(16.0),
         child: Column(
           children: [
+            // Text field for entering the title
             TextField(
               controller: _titleController,
               decoration: InputDecoration(labelText: 'Title'),
             ),
             SizedBox(height: 16.0),
+            // Text field for entering the description
             TextField(
               controller: _descriptionController,
               decoration: InputDecoration(labelText: 'Description'),
             ),
             SizedBox(height: 20.0),
+            // Save button
             InkWell(
               onTap: () {
                 final String title = _titleController.text.trim();
@@ -55,6 +58,7 @@ class _TodoFormState extends State<TodoForm> {
 
                 if (title.isNotEmpty && description.isNotEmpty) {
                   if (widget.taskId != null) {
+                    // Update an existing task
                     FirebaseFirestore.instance
                         .collection('todos')
                         .doc(widget.userId)
@@ -65,6 +69,7 @@ class _TodoFormState extends State<TodoForm> {
                       'description': description,
                     });
                   } else {
+                    // Add a new task
                     FirebaseFirestore.instance
                         .collection('todos')
                         .doc(widget.userId)
@@ -76,6 +81,7 @@ class _TodoFormState extends State<TodoForm> {
                     });
                   }
 
+                  // Navigate back to the previous screen
                   Navigator.pop(context);
                 }
               },

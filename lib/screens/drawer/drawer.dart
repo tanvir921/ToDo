@@ -7,15 +7,7 @@ import 'package:todo_assignment/screens/auth/sign_in.dart';
 import 'package:todo_assignment/screens/news/news_screen.dart';
 import 'package:todo_assignment/services/payment_service.dart';
 
-class CustomDrawer extends StatefulWidget {
-  const CustomDrawer({Key? key});
-
-  @override
-  State<CustomDrawer> createState() => _CustomDrawerState();
-}
-
-class _CustomDrawerState extends State<CustomDrawer> {
-  Map<String, dynamic>? paymentIntent;
+class CustomDrawer extends StatelessWidget {
   final PaymentService _paymentService = PaymentService();
 
   String? getUserEmail() {
@@ -48,9 +40,9 @@ class _CustomDrawerState extends State<CustomDrawer> {
               ),
             ),
             accountEmail: Padding(
-                padding: const EdgeInsets.only(left: 5),
-                child: Text(getUserEmail().toString())),
-            //currentAccountPictureSize: Size.square(0),
+              padding: const EdgeInsets.only(left: 5),
+              child: Text(getUserEmail().toString()),
+            ),
             currentAccountPicture: Icon(
               Icons.account_circle,
               color: Colors.white,
@@ -68,7 +60,9 @@ class _CustomDrawerState extends State<CustomDrawer> {
             ),
             onTap: () {
               Navigator.push(
-                  context, MaterialPageRoute(builder: (builder) => Newses()));
+                context,
+                MaterialPageRoute(builder: (builder) => Newses()),
+              );
             },
           ),
           Padding(

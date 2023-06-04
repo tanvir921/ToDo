@@ -13,12 +13,12 @@ class _SplashPageState extends State<SplashPage> {
   @override
   Widget build(BuildContext context) {
     return EasySplashScreen(
-      logo: Image.asset(
-        'assets/images/logo.png',
-      ),
+      // Set the logo as an image asset
+      logo: Image.asset('assets/images/logo.png'),
       logoWidth: 100,
       backgroundColor: Colors.white,
       showLoader: true,
+      // Set the navigator to the AuthenticationWrapper which determines the next screen
       navigator: AuthenticationWrapper(),
       durationInSeconds: 3,
     );
