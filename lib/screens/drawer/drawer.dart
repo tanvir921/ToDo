@@ -1,5 +1,6 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:google_fonts/google_fonts.dart';
 import 'package:provider/provider.dart';
 import 'package:todo_assignment/provider/auth_provider.dart';
 import 'package:todo_assignment/screens/auth/sign_in.dart';
@@ -42,6 +43,7 @@ class _CustomDrawerState extends State<CustomDrawer> {
                 "Welcome",
                 style: TextStyle(
                   fontSize: 20,
+                  fontFamily: GoogleFonts.aBeeZee().fontFamily,
                 ),
               ),
             ),

@@ -32,7 +32,7 @@ class MyApp extends StatelessWidget {
       //theming
       theme: ThemeData(
         primaryColor: Color.fromARGB(255, 19, 0, 46),
-        textTheme: GoogleFonts.robotoSlabTextTheme(),
+        textTheme: GoogleFonts.aBeeZeeTextTheme(),
         //primarySwatch: Colors.blue,
       ),
       home: SplashPage(),
