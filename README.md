@@ -5,16 +5,16 @@ This is a complete task management app build with Flutter framework.
 
 ## Screenshots
 
-![Spash screen](https://drive.google.com/file/d/1Gddl4-doyo5mY0APnQfNV1viszyoAjSM/view?usp=drive_link)
-![Log in screen](https://drive.google.com/file/d/1jkH_5BeFVN44sYn4KPDbK5i05g6utLj3/view?usp=drive_link)
-![Sign up screen](https://drive.google.com/file/d/18V_VdWJ7hhnpNNG7adf6oC2LvVa0Z44f/view?usp=drive_link)
-![Home screen](https://drive.google.com/file/d/1_ZpO8Rs04wMCcqRmh8iP_iD1-sYZ6FMN/view?usp=drive_link)
-![Add task dialog](https://drive.google.com/file/d/1ZuaKuz6JvTEgsge9nkTjTua2ev4gl_Hq/view?usp=drive_link)
-![Navigation drawer](https://drive.google.com/file/d/1eopVO4VqBKJsWW53zXnrW70qFg0_jBp9/view?usp=drive_link)
-![Read news screen](https://drive.google.com/file/d/1NlRbiauDlNK8MegdzcXNNLC6l0gpvKg4/view?usp=drive_link)
-![Detail news](https://drive.google.com/file/d/1KsInd-Q79ZF5rtJuQ2kX5BFLo9yAYsSI/view?usp=drive_link)
-![Full news in WebView](https://drive.google.com/file/d/1-lml7bAiDDouBbhi5gThA4BO8JpQAm1_/view?usp=drive_link)
-![Donation bottom sheet](https://drive.google.com/file/d/1XHfBbXTsN8QW_jD_pDo5-PA9Rhhps9hC/view?usp=drive_link)
+![Spash screen](https://drive.google.com/uc?export=view&id=1Gddl4-doyo5mY0APnQfNV1viszyoAjSM)
+![Log in screen](https://drive.google.com/uc?export=view&id=1jkH_5BeFVN44sYn4KPDbK5i05g6utLj3)
+![Sign up screen](https://drive.google.com/uc?export=view&id=18V_VdWJ7hhnpNNG7adf6oC2LvVa0Z44f)
+![Home screen](https://drive.google.com/uc?export=view&id=1_ZpO8Rs04wMCcqRmh8iP_iD1-sYZ6FMN)
+![Add task dialog](https://drive.google.com/uc?export=view&id=1ZuaKuz6JvTEgsge9nkTjTua2ev4gl_Hq)
+![Navigation drawer](https://drive.google.com/uc?export=view&id=1eopVO4VqBKJsWW53zXnrW70qFg0_jBp9)
+![Read news screen](https://drive.google.com/uc?export=view&id=1NlRbiauDlNK8MegdzcXNNLC6l0gpvKg4)
+![Detail news](https://drive.google.com/uc?export=view&id=1KsInd-Q79ZF5rtJuQ2kX5BFLo9yAYsSI)
+![Full news in WebView](https://drive.google.com/uc?export=view&id=1-lml7bAiDDouBbhi5gThA4BO8JpQAm1_)
+![Donation bottom sheet](https://drive.google.com/uc?export=view&id=1XHfBbXTsN8QW_jD_pDo5-PA9Rhhps9hC)
 
 ## Download The App
 
