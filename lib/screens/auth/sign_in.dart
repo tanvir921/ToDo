@@ -1,5 +1,3 @@
-import 'dart:ui';
-
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:todo_assignment/provider/auth_provider.dart';
@@ -22,6 +20,10 @@ class _SignInPageState extends State<SignInPage> {
     Color secondaryColor = Color.fromARGB(255, 255, 212, 1);
 
     return Scaffold(
+      appBar: AppBar(
+        backgroundColor: Colors.transparent,
+        elevation: 0,
+      ),
       body: Padding(
         padding: const EdgeInsets.all(16.0),
         child: SingleChildScrollView(

@@ -2,9 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter_stripe/flutter_stripe.dart';
 import 'package:provider/provider.dart';
-import 'package:firebase_auth/firebase_auth.dart';
-import 'package:todo_assignment/screens/auth/sign_in.dart';
-import 'package:todo_assignment/screens/home/home.dart';
 import 'package:todo_assignment/screens/splash/splash_screen.dart';
 import 'package:todo_assignment/utils/app_constraints.dart';
 import 'provider/auth_provider.dart';
@@ -36,7 +33,6 @@ class MyApp extends StatelessWidget {
       theme: ThemeData(
         primaryColor: Color.fromARGB(255, 19, 0, 46),
         textTheme: GoogleFonts.aBeeZeeTextTheme(),
-        // primarySwatch: Colors.blue,
       ),
       home: SplashPage(), // Set the SplashPage as the initial screen
     );
