@@ -129,7 +129,7 @@ class _TodoFormState extends State<TodoForm> {
                       'title': title,
                       'description': description,
                       'createdAt': DateTime.now(),
-                      'color': colorHexCode,
+                      'color': widget.color,
                     });
                   } else {
                     // Add a new task
