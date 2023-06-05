@@ -20,6 +20,26 @@ class TodoList extends StatelessWidget {
       builder: (context, snapshot) {
         if (snapshot.hasData) {
           final List<DocumentSnapshot> documents = snapshot.data!.docs;
+          if (documents.isEmpty) {
+            return Center(
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  Text(
+                    'Add task by clicking',
+                    style: TextStyle(fontSize: 15),
+                  ),
+                  SizedBox(
+                    width: 5,
+                  ),
+                  Icon(
+                    Icons.add_circle,
+                    size: 25,
+                  )
+                ],
+              ),
+            );
+          }
           return ListView.builder(
             itemCount: documents.length,
             itemBuilder: (context, index) {
@@ -59,11 +79,12 @@ class TodoList extends StatelessWidget {
                         height: 40,
                         width: 50,
                         decoration: BoxDecoration(
-                            color: Colors.white.withOpacity(0.6),
-                            borderRadius: BorderRadius.only(
-                              bottomRight: Radius.circular(10),
-                              topRight: Radius.circular(10),
-                            )),
+                          color: Colors.white.withOpacity(0.6),
+                          borderRadius: BorderRadius.only(
+                            bottomRight: Radius.circular(10),
+                            topRight: Radius.circular(10),
+                          ),
+                        ),
                         child: Checkbox(
                           activeColor: Theme.of(context).primaryColor,
                           value: isDone,
@@ -125,11 +146,12 @@ class TodoList extends StatelessWidget {
                         height: 40,
                         width: 50,
                         decoration: BoxDecoration(
-                            color: Colors.white.withOpacity(0.6),
-                            borderRadius: BorderRadius.only(
-                              bottomLeft: Radius.circular(10),
-                              topLeft: Radius.circular(10),
-                            )),
+                          color: Colors.white.withOpacity(0.6),
+                          borderRadius: BorderRadius.only(
+                            bottomLeft: Radius.circular(10),
+                            topLeft: Radius.circular(10),
+                          ),
+                        ),
                         child: IconButton(
                           icon: Icon(
                             Icons.close,
@@ -154,7 +176,7 @@ class TodoList extends StatelessWidget {
         } else if (snapshot.hasError) {
           return Text('Error loading tasks');
         } else {
-          return Container();
+          return Center(child: CircularProgressIndicator());
         }
       },
     );
