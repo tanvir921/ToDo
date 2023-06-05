@@ -2,6 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter_stripe/flutter_stripe.dart';
 import 'package:provider/provider.dart';
+import 'package:todo_assignment/provider/latest_news_provider.dart';
+import 'package:todo_assignment/provider/webview_provider.dart';
 import 'package:todo_assignment/screens/splash/splash_screen.dart';
 import 'package:todo_assignment/utils/app_constraints.dart';
 import 'provider/auth_provider.dart';
@@ -18,6 +20,8 @@ void main() async {
         ChangeNotifierProvider(
             create: (_) =>
                 AuthProvider()), // Provide the AuthProvider using ChangeNotifierProvider
+        ChangeNotifierProvider(create: (_) => LatestNewsProvider()),
+        ChangeNotifierProvider(create: (_) => WebviewProvider()),
       ],
       child: MyApp(),
     ),

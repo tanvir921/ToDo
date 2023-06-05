@@ -8,15 +8,6 @@ class TodoList extends StatelessWidget {
 
   TodoList({required this.userId});
 
-  final List<Color> rainbowColors = [
-    Colors.red.withOpacity(0.7),
-    Colors.orange.withOpacity(0.7),
-    Colors.green.withOpacity(0.7),
-    Colors.blue.withOpacity(0.7),
-    Colors.indigo.withOpacity(0.7),
-    Colors.purple.withOpacity(0.7),
-  ];
-
   @override
   Widget build(BuildContext context) {
     return StreamBuilder<QuerySnapshot>(
@@ -24,6 +15,7 @@ class TodoList extends StatelessWidget {
           .collection('todos')
           .doc(userId)
           .collection('tasks')
+          .orderBy('createdAt', descending: true)
           .snapshots(),
       builder: (context, snapshot) {
         if (snapshot.hasData) {
@@ -36,7 +28,7 @@ class TodoList extends StatelessWidget {
               final String description = task['description'];
               final bool isDone = task['isDone'] ?? false;
               final Color tileColor =
-                  rainbowColors[index % rainbowColors.length];
+                  Color(int.parse(task['color'], radix: 16));
 
               return InkWell(
                 onTap: () => showDialog(
