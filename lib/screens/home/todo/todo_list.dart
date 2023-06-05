@@ -36,6 +36,7 @@ class TodoList extends StatelessWidget {
                   builder: (context) => AlertDialog(
                     title: Text('Edit Task'),
                     content: TodoForm(
+                      color: task['color'],
                       userId: userId,
                       initialTitle: title,
                       initialDescription: description,

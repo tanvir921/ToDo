@@ -1,3 +1,4 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:provider/provider.dart';
@@ -15,6 +16,12 @@ class HomePage extends StatefulWidget {
 }
 
 class _HomePageState extends State<HomePage> {
+  Future<DocumentSnapshot<Map<String, dynamic>>> snapshot = FirebaseFirestore
+      .instance
+      .collection('colors')
+      .doc('colorDocument')
+      .get();
+
   @override
   Widget build(BuildContext context) {
     final authProvider = Provider.of<AuthProvider>(context);
@@ -54,7 +61,10 @@ class _HomePageState extends State<HomePage> {
                   context: context,
                   builder: (context) => AlertDialog(
                     title: const Text('Add Task'),
-                    content: TodoForm(userId: user.uid),
+                    content: TodoForm(
+                      userId: user.email.toString(),
+                      color: '',
+                    ),
                   ),
                 );
               },
@@ -83,7 +93,7 @@ class _HomePageState extends State<HomePage> {
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
                 Expanded(
-                  child: TodoList(userId: user.uid),
+                  child: TodoList(userId: user.email.toString()),
                 ),
               ],
             ),

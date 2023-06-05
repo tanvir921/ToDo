@@ -8,9 +8,11 @@ class TodoForm extends StatefulWidget {
   final String? initialTitle;
   final String? initialDescription;
   final String? taskId;
+  final String? color;
 
   TodoForm({
     required this.userId,
+    required this.color,
     this.initialTitle,
     this.initialDescription,
     this.taskId,
@@ -70,7 +72,14 @@ class _TodoFormState extends State<TodoForm> {
 
             // Selectable dropdown menu for color options
             DropdownButtonFormField<ColorOption>(
-              value: _selectedColorOption,
+              value: widget.taskId == null
+                  ? _selectedColorOption
+                  : titleColors.firstWhere(
+                      (colorOption) =>
+                          colorOption.color.value.toRadixString(16) ==
+                          widget.color,
+                      orElse: () => titleColors[0],
+                    ),
               onChanged: (newValue) {
                 setState(() {
                   _selectedColorOption = newValue;
