@@ -1,7 +1,6 @@
 import 'dart:math';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
-import 'package:todo_assignment/responsive/mediaquery.dart';
 
 class TodoForm extends StatefulWidget {
   final String userId;
@@ -40,46 +39,37 @@ class _TodoFormState extends State<TodoForm> {
     super.initState();
     _titleController.text = widget.initialTitle ?? '';
     _descriptionController.text = widget.initialDescription ?? '';
-    _selectedColorOption = titleColors[0];
+    _selectedColorOption =
+        _getColorOptionFromHex(widget.color) ?? titleColors[0];
+  }
+
+  ColorOption? _getColorOptionFromHex(String? hexCode) {
+    if (hexCode == null) return null;
+    return titleColors.firstWhere(
+      (colorOption) => colorOption.color.value.toRadixString(16) == hexCode,
+      orElse: () => titleColors[0],
+    );
   }
 
   @override
   Widget build(BuildContext context) {
-    // Generate a random index
-    Random random = Random();
-    int randomIndex = random.nextInt(titleColors.length);
-
-    // Retrieve the random color option from the list
-    ColorOption randomColorOption = titleColors[randomIndex];
-
     return SingleChildScrollView(
       child: Padding(
         padding: const EdgeInsets.all(16.0),
         child: Column(
           children: [
-            // Text field for entering the title
             TextField(
               controller: _titleController,
               decoration: InputDecoration(labelText: 'Title'),
             ),
             SizedBox(height: 16.0),
-            // Text field for entering the description
             TextField(
               controller: _descriptionController,
               decoration: InputDecoration(labelText: 'Description'),
             ),
             SizedBox(height: 20.0),
-
-            // Selectable dropdown menu for color options
             DropdownButtonFormField<ColorOption>(
-              value: widget.taskId == null
-                  ? _selectedColorOption
-                  : titleColors.firstWhere(
-                      (colorOption) =>
-                          colorOption.color.value.toRadixString(16) ==
-                          widget.color,
-                      orElse: () => titleColors[0],
-                    ),
+              value: _selectedColorOption,
               onChanged: (newValue) {
                 setState(() {
                   _selectedColorOption = newValue;
@@ -98,7 +88,6 @@ class _TodoFormState extends State<TodoForm> {
                             SizedBox(width: 8),
                             Text(
                               colorOption.name,
-                              //style: TextStyle(color: colorOption.color),
                             ),
                           ],
                         ),
@@ -106,10 +95,7 @@ class _TodoFormState extends State<TodoForm> {
                   .toList(),
               decoration: InputDecoration(labelText: 'Color'),
             ),
-
             SizedBox(height: 20.0),
-
-            // Save button
             InkWell(
               onTap: () {
                 final String title = _titleController.text.trim();
@@ -119,7 +105,6 @@ class _TodoFormState extends State<TodoForm> {
 
                 if (title.isNotEmpty && description.isNotEmpty) {
                   if (widget.taskId != null) {
-                    // Update an existing task
                     FirebaseFirestore.instance
                         .collection('todos')
                         .doc(widget.userId)
@@ -128,11 +113,9 @@ class _TodoFormState extends State<TodoForm> {
                         .update({
                       'title': title,
                       'description': description,
-                      //'createdAt': DateTime.now(),
-                      'color': widget.color,
+                      'color': colorHexCode,
                     });
                   } else {
-                    // Add a new task
                     FirebaseFirestore.instance
                         .collection('todos')
                         .doc(widget.userId)
@@ -146,13 +129,12 @@ class _TodoFormState extends State<TodoForm> {
                     });
                   }
 
-                  // Navigate back to the previous screen
                   Navigator.pop(context);
                 }
               },
               child: Container(
-                height: context.height * 0.04,
-                width: context.width * 0.2,
+                height: 40.0,
+                width: 120.0,
                 decoration: BoxDecoration(
                   color: Theme.of(context).primaryColor,
                   borderRadius: BorderRadius.circular(10),
