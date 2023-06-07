@@ -1,3 +1,4 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:todo_assignment/provider/auth_provider.dart';
@@ -144,14 +145,36 @@ class _SignUpPageState extends State<SignUpPage> {
                   );
                 }
               } catch (e) {
+                String errorMessage = 'Sign Up Failed';
+                if (e is FirebaseException) {
+                  // Handle specific Firebase errors
+                  switch (e.code) {
+                    case 'email-already-in-use':
+                      errorMessage = 'The email address is already in use.';
+                      break;
+                    case 'invalid-email':
+                      errorMessage = 'The email address is not valid.';
+                      break;
+                    case 'weak-password':
+                      errorMessage = 'The password is too weak.';
+                      break;
+                    default:
+                      errorMessage = 'An error occurred during sign up.';
+                      break;
+                  }
+                }
                 showDialog(
                   context: context,
                   builder: (context) => AlertDialog(
-                    title: Text('Sign Up Failed'),
-                    content: Text('Error: $e'),
+                    title: Text('Sign Up Failed', style: TextStyle(
+                      color: Theme.of(context).primaryColor,
+                    ),),
+                    content: Text(errorMessage),
                     actions: [
                       TextButton(
-                        child: Text('OK'),
+                        child: Text('OK', style: TextStyle(
+                          color: Theme.of(context).primaryColor,
+                        ),),
                         onPressed: () => Navigator.pop(context),
                       ),
                     ],

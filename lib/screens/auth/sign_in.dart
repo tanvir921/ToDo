@@ -1,3 +1,4 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:todo_assignment/provider/auth_provider.dart';
@@ -159,14 +160,38 @@ class _SignInPageState extends State<SignInPage> {
                 }
               } catch (e) {
                 // Display an error message
+                String errorMessage = 'Sign In Failed';
+                if (e is FirebaseException) {
+                  // Handle specific Firebase errors
+                  switch (e.code) {
+                    case 'invalid-email':
+                      errorMessage = 'The email address is not valid.';
+                      break;
+                    case 'user-disabled':
+                      errorMessage = 'The user account has been disabled.';
+                      break;
+                    case 'user-not-found':
+                    case 'wrong-password':
+                      errorMessage = 'Invalid email or password.';
+                      break;
+                    default:
+                      errorMessage = 'An error occurred during sign in.';
+                      break;
+                  }
+                }
+
                 showDialog(
                   context: context,
                   builder: (context) => AlertDialog(
-                    title: const Text('Sign In Failed'),
-                    content: Text('Error: $e'),
+                    title:  Text('Sign In Failed', style: TextStyle(
+                      color: Theme.of(context).primaryColor,
+                    ),),
+                    content: Text(errorMessage),
                     actions: [
                       TextButton(
-                        child: const Text('OK'),
+                        child:  Text('OK', style: TextStyle(
+                          color: Theme.of(context).primaryColor,
+                        ),),
                         onPressed: () => Navigator.pop(context),
                       ),
                     ],
