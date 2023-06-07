@@ -91,10 +91,10 @@ class CustomDrawer extends StatelessWidget {
             ),
             onTap: () {
               authProvider.signOut();
-              Navigator.pushReplacement(
-                context,
-                MaterialPageRoute(builder: (builder) => SignInPage()),
-              );
+              // Navigator.push(
+              //   context,
+              //   MaterialPageRoute(builder: (builder) => SignInPage()),
+              // );
             },
           ),
         ],
