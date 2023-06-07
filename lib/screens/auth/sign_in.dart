@@ -13,6 +13,7 @@ class SignInPage extends StatefulWidget {
 class _SignInPageState extends State<SignInPage> {
   final TextEditingController _emailController = TextEditingController();
   final TextEditingController _passwordController = TextEditingController();
+  bool _isSigningIn = false; // Track the sign-in progress
 
   @override
   Widget build(BuildContext context) {
@@ -58,6 +59,7 @@ class _SignInPageState extends State<SignInPage> {
                   obscureText: true,
                 ),
                 const SizedBox(height: 32.0),
+                // Login button with progress indicator
                 buildLoginButton(context, authProvider),
                 SizedBox(height: 15),
                 buildCreateAccountButton(context),
@@ -115,55 +117,68 @@ class _SignInPageState extends State<SignInPage> {
     Color secondaryColor = Color.fromARGB(255, 255, 212, 1);
 
     return InkWell(
-      onTap: () async {
-        try {
-          final String email = _emailController.text.trim();
-          final String password = _passwordController.text.trim();
+      onTap: _isSigningIn
+          ? null
+          : () async {
+              try {
+                final String email = _emailController.text.trim();
+                final String password = _passwordController.text.trim();
 
-          if (email.isNotEmpty && password.isNotEmpty) {
-            await authProvider.signInWithEmailAndPassword(email, password);
+                if (email.isNotEmpty && password.isNotEmpty) {
+                  // Set the sign-in progress to true
+                  setState(() {
+                    _isSigningIn = true;
+                  });
 
-            // Check if the user is authenticated
-            if (authProvider.user != null) {
-              // Sign-in successful, navigate to the desired screen
-              Navigator.pushReplacement(
-                context,
-                MaterialPageRoute(builder: (context) => HomePage()),
-              );
-            } else {
-              // Handle authentication failure
-              showDialog(
-                context: context,
-                builder: (context) => AlertDialog(
-                  title: const Text('Sign In Failed'),
-                  content: const Text('Authentication failed.'),
-                  actions: [
-                    TextButton(
-                      child: const Text('OK'),
-                      onPressed: () => Navigator.pop(context),
-                    ),
-                  ],
-                ),
-              );
-            }
-          }
-        } catch (e) {
-          // Display an error message
-          showDialog(
-            context: context,
-            builder: (context) => AlertDialog(
-              title: const Text('Sign In Failed'),
-              content: Text('Error: $e'),
-              actions: [
-                TextButton(
-                  child: const Text('OK'),
-                  onPressed: () => Navigator.pop(context),
-                ),
-              ],
-            ),
-          );
-        }
-      },
+                  await authProvider.signInWithEmailAndPassword(
+                      email, password);
+
+                  // Check if the user is authenticated
+                  if (authProvider.user != null) {
+                    // Sign-in successful, navigate to the desired screen
+                    Navigator.pushReplacement(
+                      context,
+                      MaterialPageRoute(builder: (context) => HomePage()),
+                    );
+                  } else {
+                    // Handle authentication failure
+                    showDialog(
+                      context: context,
+                      builder: (context) => AlertDialog(
+                        title: const Text('Sign In Failed'),
+                        content: const Text('Authentication failed.'),
+                        actions: [
+                          TextButton(
+                            child: const Text('OK'),
+                            onPressed: () => Navigator.pop(context),
+                          ),
+                        ],
+                      ),
+                    );
+                  }
+                }
+              } catch (e) {
+                // Display an error message
+                showDialog(
+                  context: context,
+                  builder: (context) => AlertDialog(
+                    title: const Text('Sign In Failed'),
+                    content: Text('Error: $e'),
+                    actions: [
+                      TextButton(
+                        child: const Text('OK'),
+                        onPressed: () => Navigator.pop(context),
+                      ),
+                    ],
+                  ),
+                );
+              } finally {
+                // Set the sign-in progress to false
+                setState(() {
+                  _isSigningIn = false;
+                });
+              }
+            },
       child: Container(
         height: context.height * 0.06,
         width: context.width * 0.4,
@@ -172,13 +187,23 @@ class _SignInPageState extends State<SignInPage> {
           borderRadius: BorderRadius.circular(10),
         ),
         child: Center(
-          child: Text(
-            'LOG IN',
-            style: TextStyle(
-              color: secondaryColor,
-              fontSize: 17,
-            ),
-          ),
+          child: _isSigningIn
+              ? SizedBox(
+                  height: context.height * 0.03,
+                  width: context.height * 0.03,
+                  child: CircularProgressIndicator(
+                    // Show circular progress indicator if signing in
+                    valueColor: AlwaysStoppedAnimation<Color>(secondaryColor),
+                    strokeWidth: 2,
+                  ),
+                )
+              : Text(
+                  'LOG IN',
+                  style: TextStyle(
+                    color: secondaryColor,
+                    fontSize: 17,
+                  ),
+                ),
         ),
       ),
     );

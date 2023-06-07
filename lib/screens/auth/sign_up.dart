@@ -13,6 +13,7 @@ class _SignUpPageState extends State<SignUpPage> {
   final TextEditingController _emailController = TextEditingController();
   final TextEditingController _passwordController = TextEditingController();
   Color secondaryColor = Color.fromARGB(255, 255, 212, 1);
+  bool _isSigningUp = false; // Added variable for tracking sign-up state
 
   @override
   Widget build(BuildContext context) {
@@ -122,36 +123,46 @@ class _SignUpPageState extends State<SignUpPage> {
   // Helper method to build the sign-up button
   Widget buildSignUpButton(BuildContext context, AuthProvider authProvider) {
     return InkWell(
-      onTap: () async {
-        try {
-          final String email = _emailController.text.trim();
-          final String password = _passwordController.text.trim();
+      onTap: _isSigningUp
+          ? null
+          : () async {
+              try {
+                final String email = _emailController.text.trim();
+                final String password = _passwordController.text.trim();
 
-          if (email.isNotEmpty && password.isNotEmpty) {
-            await authProvider.signUpWithEmailAndPassword(email, password);
-            // Sign-up successful, navigate to the sign-in page
-            Navigator.pushReplacement(
-              context,
-              MaterialPageRoute(builder: (context) => SignInPage()),
-            );
-          }
-        } catch (e) {
-          // Display an error message
-          showDialog(
-            context: context,
-            builder: (context) => AlertDialog(
-              title: Text('Sign Up Failed'),
-              content: Text('Error: $e'),
-              actions: [
-                TextButton(
-                  child: Text('OK'),
-                  onPressed: () => Navigator.pop(context),
-                ),
-              ],
-            ),
-          );
-        }
-      },
+                if (email.isNotEmpty && password.isNotEmpty) {
+                  setState(() {
+                    _isSigningUp = true;
+                  });
+
+                  await authProvider.signUpWithEmailAndPassword(
+                      email, password);
+
+                  Navigator.pushReplacement(
+                    context,
+                    MaterialPageRoute(builder: (context) => SignInPage()),
+                  );
+                }
+              } catch (e) {
+                showDialog(
+                  context: context,
+                  builder: (context) => AlertDialog(
+                    title: Text('Sign Up Failed'),
+                    content: Text('Error: $e'),
+                    actions: [
+                      TextButton(
+                        child: Text('OK'),
+                        onPressed: () => Navigator.pop(context),
+                      ),
+                    ],
+                  ),
+                );
+              } finally {
+                setState(() {
+                  _isSigningUp = false;
+                });
+              }
+            },
       child: Container(
         height: context.height * 0.06,
         width: context.width * 0.4,
@@ -160,13 +171,22 @@ class _SignUpPageState extends State<SignUpPage> {
           borderRadius: BorderRadius.circular(10),
         ),
         child: Center(
-          child: Text(
-            'SIGN UP',
-            style: TextStyle(
-              color: secondaryColor,
-              fontSize: 17,
-            ),
-          ),
+          child: _isSigningUp
+              ? SizedBox(
+                  height: context.height * 0.03,
+                  width: context.height * 0.03,
+                  child: CircularProgressIndicator(
+                    valueColor: AlwaysStoppedAnimation<Color>(secondaryColor),
+                    strokeWidth: 2,
+                  ),
+                )
+              : Text(
+                  'SIGN UP',
+                  style: TextStyle(
+                    color: secondaryColor,
+                    fontSize: 17,
+                  ),
+                ),
         ),
       ),
     );
