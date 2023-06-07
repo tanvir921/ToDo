@@ -20,51 +20,49 @@ class _SignInPageState extends State<SignInPage> {
     Color secondaryColor = Color.fromARGB(255, 255, 212, 1);
 
     return Scaffold(
-      appBar: AppBar(
-        backgroundColor: Colors.transparent,
-        elevation: 0,
-      ),
-      body: Padding(
-        padding: const EdgeInsets.all(16.0),
-        child: SingleChildScrollView(
-          physics: ClampingScrollPhysics(),
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: [
-              Container(
-                height: context.height * 0.3,
-                width: context.width * 0.5,
-                child: Image.asset('assets/images/logo.png'),
-              ),
-              SizedBox(height: 20),
-              Text(
-                'WELCOME',
-                style: TextStyle(
-                  color: Theme.of(context).primaryColor,
-                  fontSize: 30,
-                  fontWeight: FontWeight.bold,
+      body: Center(
+        child: Padding(
+          padding: const EdgeInsets.all(16.0),
+          child: SingleChildScrollView(
+            physics: ClampingScrollPhysics(),
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                Container(
+                  height: context.height * 0.3,
+                  width: context.width * 0.5,
+                  child: Image.asset('assets/images/logo.png'),
                 ),
-              ),
-              SizedBox(height: 20),
-              buildTextField(
-                context,
-                _emailController,
-                Icons.email,
-                'abc@email.com',
-              ),
-              const SizedBox(height: 16.0),
-              buildTextField(
-                context,
-                _passwordController,
-                Icons.lock,
-                'Your Password',
-                obscureText: true,
-              ),
-              const SizedBox(height: 32.0),
-              buildLoginButton(context, authProvider),
-              SizedBox(height: 15),
-              buildCreateAccountButton(context),
-            ],
+                SizedBox(height: 20),
+                Text(
+                  'WELCOME',
+                  style: TextStyle(
+                    color: Theme.of(context).primaryColor,
+                    fontSize: 30,
+                    fontWeight: FontWeight.bold,
+                  ),
+                ),
+                SizedBox(height: 20),
+                buildTextField(
+                  context,
+                  _emailController,
+                  Icons.email,
+                  'abc@email.com',
+                ),
+                const SizedBox(height: 16.0),
+                buildTextField(
+                  context,
+                  _passwordController,
+                  Icons.lock,
+                  'Your Password',
+                  obscureText: true,
+                ),
+                const SizedBox(height: 32.0),
+                buildLoginButton(context, authProvider),
+                SizedBox(height: 15),
+                buildCreateAccountButton(context),
+              ],
+            ),
           ),
         ),
       ),

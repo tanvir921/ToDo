@@ -40,6 +40,7 @@ class _DetailViewState extends State<DetailView> {
     DateTime dt2 = DateTime.now();
 
     Duration diff = dt2.difference(dt1);
+
     return Scaffold(
       body: ScaffoldLayoutBuilder(
         backgroundColorAppBar:
@@ -126,6 +127,9 @@ class _DetailViewState extends State<DetailView> {
                           fontSize: 22,
                           fontWeight: FontWeight.bold,
                         ),
+                      ),
+                      const SizedBox(
+                        height: 10,
                       ),
                     ],
                   ),

@@ -100,7 +100,7 @@ class _HomePageState extends State<HomePage> {
           );
         } else {
           // If the user is not authenticated, navigate to the sign-in page
-          WidgetsBinding.instance!.addPostFrameCallback((_) {
+          WidgetsBinding.instance.addPostFrameCallback((_) {
             Navigator.pushReplacement(
                 context, MaterialPageRoute(builder: (builder) => SignInPage()));
           });
