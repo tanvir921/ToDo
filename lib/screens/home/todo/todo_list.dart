@@ -176,7 +176,10 @@ class TodoList extends StatelessWidget {
         } else if (snapshot.hasError) {
           return Text('Error loading tasks');
         } else {
-          return Center(child: CircularProgressIndicator());
+          return Center(child: CircularProgressIndicator(
+            valueColor: AlwaysStoppedAnimation<Color>(Theme.of(context).primaryColor),
+            strokeWidth: 2,
+          ));
         }
       },
     );

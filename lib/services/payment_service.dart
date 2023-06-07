@@ -103,11 +103,11 @@ class PaymentService {
     if (user != null) {
       final collectionRef = FirebaseFirestore.instance.collection('payments');
       final userPaymentsRef =
-          collectionRef.doc(user.uid).collection('userPayments');
+          collectionRef.doc(user.email).collection('userPayments');
 
       userPaymentsRef.add({
         'paymentId': paymentId,
-        'amount': amount / 100,
+        'amount': "\$${amount / 100}",
         'date': DateTime.now().toIso8601String(),
       }).then((value) {
         print('Payment saved to Firebase: $paymentId, $amount');

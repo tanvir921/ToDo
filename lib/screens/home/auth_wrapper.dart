@@ -20,7 +20,8 @@ class AuthenticationWrapper extends StatelessWidget {
           return Scaffold(
             body: Center(
                 child: CircularProgressIndicator(
-              color: Theme.of(context).primaryColor,
+                  valueColor: AlwaysStoppedAnimation<Color>(Theme.of(context).primaryColor),
+                  strokeWidth: 2,
             )),
           );
         } else {

@@ -38,7 +38,8 @@ class _MoreWebviewState extends State<MoreWebview> {
       body: isLoading == true
           ? Center(
               child: CircularProgressIndicator(
-                color: Theme.of(context).primaryColor,
+                valueColor: AlwaysStoppedAnimation<Color>(Theme.of(context).primaryColor),
+                strokeWidth: 2,
               ),
             )
           : WebViewWidget(controller: controller),

@@ -214,7 +214,8 @@ class _NewsesState extends State<Newses>
             } else {
               return Center(
                 child: CircularProgressIndicator(
-                  color: Theme.of(context).primaryColor,
+                  valueColor: AlwaysStoppedAnimation<Color>(Theme.of(context).primaryColor),
+                  strokeWidth: 2,
                 ),
               );
             }

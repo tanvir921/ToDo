@@ -46,7 +46,8 @@ class _HomePageState extends State<HomePage> {
             ),
             body: Center(
               child: CircularProgressIndicator(
-                color: Theme.of(context).primaryColor,
+                valueColor: AlwaysStoppedAnimation<Color>(Theme.of(context).primaryColor),
+                strokeWidth: 2,
               ),
             ),
           );
