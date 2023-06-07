@@ -1,6 +1,6 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
-import 'package:todo_assignment/responsive/mediaquery.dart';
+import 'package:todo_assignment/helpers/responsive_helper.dart';
 import 'package:todo_assignment/screens/home/todo/todo_form.dart';
 
 class TodoList extends StatelessWidget {

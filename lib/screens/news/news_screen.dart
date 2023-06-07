@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:html_unescape/html_unescape.dart';
 import 'package:todo_assignment/helpers/first_later_capitalizationer.dart';
 import 'package:todo_assignment/models/latest_news_model.dart';
-import 'package:todo_assignment/responsive/mediaquery.dart';
+import 'package:todo_assignment/helpers/responsive_helper.dart';
 import 'package:todo_assignment/screens/home/home.dart';
 import 'package:todo_assignment/screens/news/detail_view.dart';
 import 'package:todo_assignment/utils/api_call.dart';

@@ -2,7 +2,7 @@ import 'package:appbar_animated/appbar_animated.dart';
 import 'package:flutter/material.dart';
 import 'package:html_unescape/html_unescape.dart';
 import 'package:todo_assignment/helpers/first_later_capitalizationer.dart';
-import 'package:todo_assignment/responsive/mediaquery.dart';
+import 'package:todo_assignment/helpers/responsive_helper.dart';
 import 'package:todo_assignment/screens/news/more_webview.dart';
 
 class DetailView extends StatefulWidget {
