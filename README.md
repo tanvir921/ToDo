@@ -5,11 +5,12 @@ This is a complete task management app built with the Flutter framework.
 
 ## Download The App
 
-ToDo: [Download from Google Drive](https://drive.google.com/file/d/1KXj528N6aBXPOHc41AEtj9Zs6v9hBZLP/view?usp=drive_link)
+ToDo: [Download from Google Drive](https://drive.google.com/file/d/1QZiQzw4V2Q1EEHm_vA45dAsD6W2mx-DG/view?usp=drive_link)
 
 ## Technologies Used
 
 - Flutter (v3.7.10)
+- Provider State Management Package
 - Firebase
 - REST API
 
@@ -96,10 +97,6 @@ Contributions are welcome! Here's how you can contribute:
 - Make your changes
 - Open a pull request
 
-## License
-
-This project is licensed under the [MIT License](LICENSE).
-
 ## Contact
 
-Tanvir Ahmed - [tanvir21.personal@gmail.com](mailto: tanvir21.personal@gmail.com)
+Tanvir Ahmed - tanvir21.personal@gmail.com
