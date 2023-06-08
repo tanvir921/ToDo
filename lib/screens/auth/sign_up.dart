@@ -166,15 +166,21 @@ class _SignUpPageState extends State<SignUpPage> {
                 showDialog(
                   context: context,
                   builder: (context) => AlertDialog(
-                    title: Text('Sign Up Failed', style: TextStyle(
-                      color: Theme.of(context).primaryColor,
-                    ),),
+                    title: Text(
+                      'Sign Up Failed',
+                      style: TextStyle(
+                        color: Theme.of(context).primaryColor,
+                      ),
+                    ),
                     content: Text(errorMessage),
                     actions: [
                       TextButton(
-                        child: Text('OK', style: TextStyle(
-                          color: Theme.of(context).primaryColor,
-                        ),),
+                        child: Text(
+                          'OK',
+                          style: TextStyle(
+                            color: Theme.of(context).primaryColor,
+                          ),
+                        ),
                         onPressed: () => Navigator.pop(context),
                       ),
                     ],

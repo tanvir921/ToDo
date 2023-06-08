@@ -183,15 +183,21 @@ class _SignInPageState extends State<SignInPage> {
                 showDialog(
                   context: context,
                   builder: (context) => AlertDialog(
-                    title:  Text('Sign In Failed', style: TextStyle(
-                      color: Theme.of(context).primaryColor,
-                    ),),
+                    title: Text(
+                      'Sign In Failed',
+                      style: TextStyle(
+                        color: Theme.of(context).primaryColor,
+                      ),
+                    ),
                     content: Text(errorMessage),
                     actions: [
                       TextButton(
-                        child:  Text('OK', style: TextStyle(
-                          color: Theme.of(context).primaryColor,
-                        ),),
+                        child: Text(
+                          'OK',
+                          style: TextStyle(
+                            color: Theme.of(context).primaryColor,
+                          ),
+                        ),
                         onPressed: () => Navigator.pop(context),
                       ),
                     ],
